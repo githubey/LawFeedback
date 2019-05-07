@@ -6,12 +6,14 @@ import android.widget.Toast;
 import com.codefair.lawfeedback.GlobalApplication;
 import com.codefair.lawfeedback.R;
 import com.codefair.lawfeedback.listener.SuccessGetttingJobListListener;
+import com.codefair.lawfeedback.listener.SuccessLoginListener;
 import com.codefair.lawfeedback.listener.SuccessRegisterationLawmakerListListener;
 import com.codefair.lawfeedback.listener.SuccessRegisterationNormalListener;
 import com.codefair.lawfeedback.model.Job;
 import com.codefair.lawfeedback.model.LoginDTO;
 import com.codefair.lawfeedback.model.User;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -33,6 +35,7 @@ public class RetrofitManager {
     private SuccessGetttingJobListListener mSuccessGetttingJobListListener;
     private SuccessRegisterationLawmakerListListener mSuccessRegisterationLawmakerListener;
     private SuccessRegisterationNormalListener mSuccessRegisterationNormalListener;
+    private SuccessLoginListener mSuccessLoginListener;
 
     private RetrofitManager() {
         retrofit = new Retrofit.Builder().baseUrl(requestURL).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create())).build();
@@ -57,6 +60,10 @@ public class RetrofitManager {
         this.mSuccessRegisterationNormalListener = mSuccessRegisstrationNormalListener;
     }
 
+    public void setOnSuccessLoginListener(SuccessLoginListener mSuccessLoginListener) {
+        this.mSuccessLoginListener = mSuccessLoginListener;
+    }
+
     public void removeSuccessGettingJobListListener() {
         this.mSuccessGetttingJobListListener = null;
     }
@@ -67,6 +74,10 @@ public class RetrofitManager {
 
     public void removeSuccessRestrationNormalListener() {
         this.mSuccessRegisterationNormalListener = null;
+    }
+
+    public void removeSuccessLoginListener() {
+        this.mSuccessLoginListener = null;
     }
 
     private void logForErrorResponse(int errorCode, String errorMessage, String methodName) {
@@ -154,8 +165,14 @@ public class RetrofitManager {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    Log.i(TAG, methodName + ": loginSuccess, user_id = " + response.body().get("userId"));
+                    Toast.makeText(GlobalApplication.getGlobalContext(), R.string.login_success_message, Toast.LENGTH_LONG).show();
+                    Long userId = response.body().get("userId").getAsLong();
+                    Log.i(TAG, methodName + ": loginSuccess, user_id = " + userId);
+                    if (mSuccessLoginListener != null) {
+                        mSuccessLoginListener.onSuccessLogin(userId);
+                    }
                 } else {
+                    Toast.makeText(GlobalApplication.getGlobalContext(), R.string.login_fail_message, Toast.LENGTH_LONG).show();
                     logForErrorResponse(response.code(), response.errorBody().toString(), methodName);
                 }
             }

@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.RegisterSuccessActivity"></activity>
+        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.RegisterSuccessActivity" />
         <activity android:name=".activity.RegisterLawmakerActivity" />
         <activity android:name=".activity.RegisterNormalActivity" />
         <activity android:name=".activity.LoginActivity">

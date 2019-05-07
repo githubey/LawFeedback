@@ -9,15 +9,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.codefair.lawfeedback.R;
+import com.codefair.lawfeedback.listener.SuccessLoginListener;
 import com.codefair.lawfeedback.model.LoginDTO;
 import com.codefair.lawfeedback.network.RetrofitManager;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements SuccessLoginListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        RetrofitManager.getInstance().setOnSuccessLoginListener(this);
 
         TextView registerNormalText = findViewById(R.id.registerNormalText);
         registerNormalText.setOnClickListener(new View.OnClickListener() {
@@ -46,5 +49,19 @@ public class LoginActivity extends AppCompatActivity {
                 RetrofitManager.getInstance().login(new LoginDTO(email.getText().toString(), password.getText().toString()));
             }
         });
+    }
+
+
+    @Override
+    public void onSuccessLogin(Long userId) {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.putExtra("userId", userId);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        RetrofitManager.getInstance().removeSuccessLoginListener();
+        super.onDestroy();
     }
 }
