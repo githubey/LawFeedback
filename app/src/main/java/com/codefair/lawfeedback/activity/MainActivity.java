@@ -3,6 +3,8 @@ package com.codefair.lawfeedback.activity;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.codefair.lawfeedback.R;
@@ -18,6 +20,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements SuccessGettingArticleListListener, SwipeRefreshLayout.OnRefreshListener {
 
     private SwipeRefreshLayout mainSwipeLayout;
+    private List<ArticleListItem> articleItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +36,15 @@ public class MainActivity extends AppCompatActivity implements SuccessGettingArt
 
     @Override
     public void onOKResponse(Response<List<ArticleListItem>> response) {
-        List<ArticleListItem> articleItemList = response.body();
+        articleItemList = response.body();
         ListView mainListView = findViewById(R.id.mainListView);
         mainListView.setAdapter(new MainListViewAdapter(articleItemList));
+        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //TODO
+            }
+        });
     }
 
     @Override
