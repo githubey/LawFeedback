@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.codefair.lawfeedback.R;
-import com.codefair.lawfeedback.listener.SuccessGetttingJobListListener;
+import com.codefair.lawfeedback.listener.SuccessGettingJobListListener;
 import com.codefair.lawfeedback.listener.SuccessRegisterationNormalListener;
 import com.codefair.lawfeedback.model.Job;
 import com.codefair.lawfeedback.model.User;
@@ -24,7 +24,7 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public class RegisterNormalActivity extends AppCompatActivity implements SuccessGetttingJobListListener, SuccessRegisterationNormalListener {
+public class RegisterNormalActivity extends AppCompatActivity implements SuccessGettingJobListListener, SuccessRegisterationNormalListener {
 
     private static String TAG = "RegisterNormalActivity";
     private ArrayAdapter adapter;

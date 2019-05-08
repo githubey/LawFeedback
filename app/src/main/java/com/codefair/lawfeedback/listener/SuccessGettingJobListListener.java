@@ -6,6 +6,6 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public interface SuccessGetttingJobListListener {
+public interface SuccessGettingJobListListener {
     void onOKResponse(Response<List<Job>> response);
 }

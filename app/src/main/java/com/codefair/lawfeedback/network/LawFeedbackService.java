@@ -1,5 +1,6 @@
 package com.codefair.lawfeedback.network;
 
+import com.codefair.lawfeedback.model.ArticleListItem;
 import com.codefair.lawfeedback.model.Job;
 import com.codefair.lawfeedback.model.LoginDTO;
 import com.codefair.lawfeedback.model.User;
@@ -27,6 +28,9 @@ public interface LawFeedbackService {
 
     @POST("/login")
     Call<JsonObject> login(@Body LoginDTO loginDTO);
+
+    @GET("/articles")
+    Call<List<ArticleListItem>> getArticleList();
 //
 //    @POST("/users/{id}/cells")
 //    Call<JsonObject> createCell(@Path("id") Long userId, @Body DiaryCell body);
