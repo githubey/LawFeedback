@@ -17,7 +17,7 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements SuccessGettingArticleListListener, SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends AppCompatActivity implements SuccessGettingArticleListListener, SwipeRefreshLayout.OnRefreshListener, MainListViewAdapter.ListImageClickListener {
 
     private SwipeRefreshLayout mainSwipeLayout;
     private List<ArticleListItem> articleItemList;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements SuccessGettingArt
     public void onOKResponse(Response<List<ArticleListItem>> response) {
         articleItemList = response.body();
         ListView mainListView = findViewById(R.id.mainListView);
-        mainListView.setAdapter(new MainListViewAdapter(articleItemList));
+        mainListView.setAdapter(new MainListViewAdapter(articleItemList, this));
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -57,5 +57,10 @@ public class MainActivity extends AppCompatActivity implements SuccessGettingArt
     public void onRefresh() {
         RetrofitManager.getInstance().getArticleList();
         mainSwipeLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onListImageClick(int position, boolean isRelated) {
+        //TODO
     }
 }

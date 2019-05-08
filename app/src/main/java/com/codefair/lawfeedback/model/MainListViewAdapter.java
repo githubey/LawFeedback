@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codefair.lawfeedback.R;
@@ -14,10 +15,16 @@ import java.util.List;
 
 public class MainListViewAdapter extends BaseAdapter {
 
-    private List<ArticleListItem> articleItemList = new ArrayList<ArticleListItem>();
+    public interface ListImageClickListener {
+        void onListImageClick(int position, boolean isRelated);
+    }
 
-    public MainListViewAdapter(List<ArticleListItem> articleItemList) {
+    private List<ArticleListItem> articleItemList = new ArrayList<ArticleListItem>();
+    private ListImageClickListener listImageClickListener;
+
+    public MainListViewAdapter(List<ArticleListItem> articleItemList, ListImageClickListener listImageClickListener) {
         this.articleItemList = articleItemList;
+        this.listImageClickListener = listImageClickListener;
     }
 
     @Override
@@ -51,6 +58,25 @@ public class MainListViewAdapter extends BaseAdapter {
         ArticleListItem articleListItem = articleItemList.get(position);
         titleTextView.setText(articleListItem.getTitle());
         summaryTextView.setText(articleListItem.getSummary());
+
+        ImageView relatedReplyImageView = convertView.findViewById(R.id.relatedReplyImageInMainListItem);
+        relatedReplyImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listImageClickListener != null) {
+                    listImageClickListener.onListImageClick(pos, true);
+                }
+            }
+        });
+        ImageView allReplyImageView = convertView.findViewById(R.id.allReplyImageInMainListItem);
+        allReplyImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listImageClickListener != null) {
+                    listImageClickListener.onListImageClick(pos, false);
+                }
+            }
+        });
 
         return convertView;
     }
