@@ -1,6 +1,7 @@
 package com.codefair.lawfeedback.activity;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
@@ -14,7 +15,9 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements SuccessGettingArticleListListener {
+public class MainActivity extends AppCompatActivity implements SuccessGettingArticleListListener, SwipeRefreshLayout.OnRefreshListener {
+
+    private SwipeRefreshLayout mainSwipeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements SuccessGettingArt
 
         RetrofitManager.getInstance().setOnSuccessGettingArticleListListener(this);
         RetrofitManager.getInstance().getArticleList();
+
+        mainSwipeLayout = findViewById(R.id.mainSwipeLayout);
+        mainSwipeLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -36,5 +42,11 @@ public class MainActivity extends AppCompatActivity implements SuccessGettingArt
     protected void onDestroy() {
         RetrofitManager.getInstance().removeSuccessGettingArticleListListener();
         super.onDestroy();
+    }
+
+    @Override
+    public void onRefresh() {
+        RetrofitManager.getInstance().getArticleList();
+        mainSwipeLayout.setRefreshing(false);
     }
 }
