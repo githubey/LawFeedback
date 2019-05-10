@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:width="320dp"
-            android:height="350dp"
+            android:height="300dp"
             android:inputType="textMultiLine"
             android:background="@drawable/border"
             android:scrollbars="vertical"
