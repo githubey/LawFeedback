@@ -26,6 +26,7 @@
                 android:drawableStart="@drawable/ic_mail_outline_black_24dp"
                 android:hint="@string/login_id_hint"
                 android:padding="10dp"
+                android:inputType="text"
                 android:privateImeOptions="defaultInputmode=english" />
 
             <EditText
