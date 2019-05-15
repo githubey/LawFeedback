@@ -1,11 +1,13 @@
 package com.codefair.lawfeedback.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.codefair.lawfeedback.R;
@@ -35,12 +37,19 @@ public class MainActivity extends AppCompatActivity implements SuccessGettingArt
         mainSwipeLayout.setOnRefreshListener(this);
 
         FloatingActionButton mainFloatingBtn = findViewById(R.id.mainFloatingBtn);
-        mainFloatingBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO
-            }
-        });
+        if (!getIntent().getStringExtra("userName").equals("")) {
+            mainFloatingBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, WriteArticleActivity.class);
+                    intent.putExtra("userId", getIntent().getLongExtra("userId", 0L));
+                    startActivity(intent);
+                }
+            });
+        } else {
+            FrameLayout layout = findViewById(R.id.activity_main);
+            layout.findViewById(R.id.mainFloatingBtn).setVisibility(View.GONE);
+        }
     }
 
     @Override

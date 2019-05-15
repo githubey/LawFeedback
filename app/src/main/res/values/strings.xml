@@ -16,4 +16,10 @@
     <string name="confirm_text">확인</string>
     <string name="login_fail_message">로그인에 실패하였습니다. \n아이디 혹은 비밀번호를 확인해주세요.</string>
     <string name="login_success_message">로그인에 성공하였습니다.</string>
+    <string name="write_article_title">제목</string>
+    <string name="write_article_btn_string">글쓰기</string>
+    <string name="write_article_select_job_text1">연관된 사회적 지위 1</string>
+    <string name="write_article_select_job_text2">연관된 사회적 지위 2</string>
+    <string name="write_article_success_message">글 쓰기에 성공하였습니다.</string>
+    <string name="write_article_fail_message">글 쓰기에 실패하였습니다. 서버 오류.</string>
 </resources>
