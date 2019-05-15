@@ -19,6 +19,7 @@ import com.codefair.lawfeedback.model.WriteArticleTO;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -40,7 +41,7 @@ public class RetrofitManager {
     private SuccessRegisterationNormalListener mSuccessRegisterationNormalListener;
     private SuccessLoginListener mSuccessLoginListener;
     private SuccessGettingArticleListListener mSuccessGettingArticleListListener;
-    private SuccessWriteArticleListener mSuccessWriteArticleListener;
+    private List<SuccessWriteArticleListener> mSuccessWriteArticleListenerList = new ArrayList<>();
 
     private RetrofitManager() {
         retrofit = new Retrofit.Builder().baseUrl(requestURL).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create())).build();
@@ -73,8 +74,8 @@ public class RetrofitManager {
         this.mSuccessGettingArticleListListener = mSuccessGettingArticleListListener;
     }
 
-    public void setOnSuccessWriteArticleListener(SuccessWriteArticleListener mSuccessWriteArticleListener) {
-        this.mSuccessWriteArticleListener = mSuccessWriteArticleListener;
+    public void addOnSuccessWriteArticleListener(SuccessWriteArticleListener mSuccessWriteArticleListener) {
+        this.mSuccessWriteArticleListenerList.add(mSuccessWriteArticleListener);
     }
 
     public void removeSuccessGettingJobListListener() {
@@ -93,8 +94,8 @@ public class RetrofitManager {
         this.mSuccessGettingArticleListListener = null;
     }
 
-    public void removeSuccessWriteArticleListener() {
-        this.mSuccessWriteArticleListener = null;
+    public void removeSuccessWriteArticleListener(SuccessWriteArticleListener mSuccessWriteArticleListener) {
+        this.mSuccessWriteArticleListenerList.remove(mSuccessWriteArticleListener);
     }
 
     public void removeSuccessLoginListener() {
@@ -238,8 +239,10 @@ public class RetrofitManager {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(GlobalApplication.getGlobalContext(), R.string.write_article_success_message, Toast.LENGTH_LONG).show();
-                    if (mSuccessWriteArticleListener != null) {
-                        mSuccessWriteArticleListener.onSuccessWriteArticle();
+                    if (mSuccessWriteArticleListenerList.size() > 0) {
+                        for (SuccessWriteArticleListener mSuccessWriteArticleListener : mSuccessWriteArticleListenerList) {
+                            mSuccessWriteArticleListener.onSuccessWriteArticle();
+                        }
                     }
                 } else {
                     Toast.makeText(GlobalApplication.getGlobalContext(), R.string.write_article_fail_message, Toast.LENGTH_LONG).show();

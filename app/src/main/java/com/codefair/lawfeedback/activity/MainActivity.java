@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.codefair.lawfeedback.R;
 import com.codefair.lawfeedback.listener.SuccessGettingArticleListListener;
+import com.codefair.lawfeedback.listener.SuccessWriteArticleListener;
 import com.codefair.lawfeedback.model.ArticleListItem;
 import com.codefair.lawfeedback.model.MainListViewAdapter;
 import com.codefair.lawfeedback.network.RetrofitManager;
@@ -20,7 +21,7 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements SuccessGettingArticleListListener, SwipeRefreshLayout.OnRefreshListener, MainListViewAdapter.ListImageClickListener {
+public class MainActivity extends AppCompatActivity implements SuccessGettingArticleListListener, SwipeRefreshLayout.OnRefreshListener, MainListViewAdapter.ListImageClickListener, SuccessWriteArticleListener {
 
     private SwipeRefreshLayout mainSwipeLayout;
     private List<ArticleListItem> articleItemList;
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements SuccessGettingArt
             FrameLayout layout = findViewById(R.id.activity_main);
             layout.findViewById(R.id.mainFloatingBtn).setVisibility(View.GONE);
         }
+
+        RetrofitManager.getInstance().addOnSuccessWriteArticleListener(this);
     }
 
     @Override
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements SuccessGettingArt
     @Override
     protected void onDestroy() {
         RetrofitManager.getInstance().removeSuccessGettingArticleListListener();
+        RetrofitManager.getInstance().removeSuccessWriteArticleListener(this);
         super.onDestroy();
     }
 
@@ -80,5 +84,10 @@ public class MainActivity extends AppCompatActivity implements SuccessGettingArt
     @Override
     public void onListImageClick(int position, boolean isRelated) {
         //TODO
+    }
+
+    @Override
+    public void onSuccessWriteArticle() {
+        RetrofitManager.getInstance().getArticleList();
     }
 }

@@ -1,5 +1,6 @@
 package com.codefair.lawfeedback.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -42,7 +43,7 @@ public class WriteArticleActivity extends AppCompatActivity implements SuccessGe
         RetrofitManager.getInstance().setOnSuccessGettingJobListListener(this);
         RetrofitManager.getInstance().getJobList();
 
-        RetrofitManager.getInstance().setOnSuccessWriteArticleListener(this);
+        RetrofitManager.getInstance().addOnSuccessWriteArticleListener(this);
         Button writeArticleBtn = findViewById(R.id.writeArticleBtn);
         writeArticleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,11 +54,6 @@ public class WriteArticleActivity extends AppCompatActivity implements SuccessGe
                 List<Long> jobIdList = new ArrayList<>();
                 jobIdList.add(((Job) spinner1.getSelectedItem()).getId());
                 jobIdList.add(((Job) spinner2.getSelectedItem()).getId());
-
-                //TODO erase
-                for (Long jobId : jobIdList) {
-                    Log.i("WriteArticleActivity", "Job Id: " + jobId);
-                }
 
                 WriteArticleTO writeArticleTO = new WriteArticleTO(getIntent().getLongExtra("userId", 0L), title.getText().toString(), content.getText().toString(), jobIdList);
                 RetrofitManager.getInstance().writeArticle(writeArticleTO);
@@ -96,13 +92,15 @@ public class WriteArticleActivity extends AppCompatActivity implements SuccessGe
     @Override
     protected void onDestroy() {
         RetrofitManager.getInstance().removeSuccessGettingJobListListener();
-        RetrofitManager.getInstance().removeSuccessWriteArticleListener();
+        RetrofitManager.getInstance().removeSuccessWriteArticleListener(this);
         super.onDestroy();
     }
 
     @Override
     public void onSuccessWriteArticle() {
-        //TODO
-        Log.i("WriteArticleActivity", "Success Write Article");
+        Intent intentMain = new Intent(WriteArticleActivity.this, MainActivity.class);
+        intentMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intentMain.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intentMain);
     }
 }
