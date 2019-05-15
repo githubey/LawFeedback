@@ -4,6 +4,7 @@ import com.codefair.lawfeedback.model.ArticleListItem;
 import com.codefair.lawfeedback.model.Job;
 import com.codefair.lawfeedback.model.LoginDTO;
 import com.codefair.lawfeedback.model.User;
+import com.codefair.lawfeedback.model.WriteArticleTO;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -31,13 +32,8 @@ public interface LawFeedbackService {
 
     @GET("/articles")
     Call<List<ArticleListItem>> getArticleList();
-//
-//    @POST("/users/{id}/cells")
-//    Call<JsonObject> createCell(@Path("id") Long userId, @Body DiaryCell body);
-//
-//    @POST("/users/{id}/sync")
-//    Call<List<DiaryCell>> sync(@Path("id") Long userId, @Body SyncData body);
-//
-//    @POST("/users/{id}/config")
-//    Call<JsonObject> setConfig(@Path("id") Long userId, @Body Config body);
+
+    @POST("/articles")
+    Call<JsonObject> writeArticle(@Body WriteArticleTO writeArticleTO);
+
 }
