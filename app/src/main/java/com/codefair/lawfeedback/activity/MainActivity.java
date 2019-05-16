@@ -63,7 +63,10 @@ public class MainActivity extends AppCompatActivity implements SuccessGettingArt
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO
+                Intent intent = new Intent(MainActivity.this, ArticleViewActivity.class);
+                intent.putExtra("userId", getIntent().getLongExtra("userId", 0L));
+                intent.putExtra("articleId", articleItemList.get(position).getId());
+                startActivity(intent);
             }
         });
     }
