@@ -5,12 +5,14 @@ import android.widget.Toast;
 
 import com.codefair.lawfeedback.GlobalApplication;
 import com.codefair.lawfeedback.R;
+import com.codefair.lawfeedback.listener.SuccessGettingArticleInfoListener;
 import com.codefair.lawfeedback.listener.SuccessGettingArticleListListener;
 import com.codefair.lawfeedback.listener.SuccessGettingJobListListener;
 import com.codefair.lawfeedback.listener.SuccessLoginListener;
 import com.codefair.lawfeedback.listener.SuccessRegisterationLawmakerListListener;
 import com.codefair.lawfeedback.listener.SuccessRegisterationNormalListener;
 import com.codefair.lawfeedback.listener.SuccessWriteArticleListener;
+import com.codefair.lawfeedback.model.ArticleInfo;
 import com.codefair.lawfeedback.model.ArticleListItem;
 import com.codefair.lawfeedback.model.Job;
 import com.codefair.lawfeedback.model.LoginDTO;
@@ -42,6 +44,7 @@ public class RetrofitManager {
     private SuccessLoginListener mSuccessLoginListener;
     private SuccessGettingArticleListListener mSuccessGettingArticleListListener;
     private List<SuccessWriteArticleListener> mSuccessWriteArticleListenerList = new ArrayList<>();
+    private SuccessGettingArticleInfoListener mSuccessGettingArticleInfoListener;
 
     private RetrofitManager() {
         retrofit = new Retrofit.Builder().baseUrl(requestURL).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create())).build();
@@ -78,6 +81,10 @@ public class RetrofitManager {
         this.mSuccessWriteArticleListenerList.add(mSuccessWriteArticleListener);
     }
 
+    public void setOnSuccessGettingArticleInfoListener(SuccessGettingArticleInfoListener mSuccessGettingArticleInfoListener) {
+        this.mSuccessGettingArticleInfoListener = mSuccessGettingArticleInfoListener;
+    }
+
     public void removeSuccessGettingJobListListener() {
         this.mSuccessGettingJobListListener = null;
     }
@@ -96,6 +103,10 @@ public class RetrofitManager {
 
     public void removeSuccessWriteArticleListener(SuccessWriteArticleListener mSuccessWriteArticleListener) {
         this.mSuccessWriteArticleListenerList.remove(mSuccessWriteArticleListener);
+    }
+
+    public void removeSuccessGettingArticleInfoListener() {
+        this.mSuccessGettingArticleInfoListener = null;
     }
 
     public void removeSuccessLoginListener() {
@@ -253,6 +264,30 @@ public class RetrofitManager {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 logForFailureConnection(t.getMessage(), methodName);
+            }
+        });
+    }
+
+    public void getArticleInfo(Long articleId) {
+        final String methodName = "getArticleInfo";
+        Call<ArticleInfo> req = service.getArticleInfo(articleId);
+        req.enqueue(new Callback<ArticleInfo>() {
+            @Override
+            public void onResponse(Call<ArticleInfo> call, Response<ArticleInfo> response) {
+                if (response.isSuccessful()) {
+                    if (mSuccessGettingArticleInfoListener != null) {
+                        Log.i(TAG, methodName + ": okResponse");
+                        mSuccessGettingArticleInfoListener.onOKResponse(response);
+                    }
+                } else {
+                    logForErrorResponse(response.code(), response.errorBody().toString(), methodName);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArticleInfo> call, Throwable t) {
+                String errorMessage = t.getMessage();
+                logForFailureConnection(errorMessage, methodName);
             }
         });
     }
