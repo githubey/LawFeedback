@@ -53,9 +53,10 @@ public class LoginActivity extends AppCompatActivity implements SuccessLoginList
 
 
     @Override
-    public void onSuccessLogin(Long userId, String name) {
+    public void onSuccessLogin(Long userId, Long jobId, String name) {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("userId", userId);
+        intent.putExtra("jobId", jobId);
         intent.putExtra("userName", name);
         startActivity(intent);
     }

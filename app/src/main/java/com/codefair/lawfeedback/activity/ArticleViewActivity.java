@@ -9,6 +9,7 @@ import com.codefair.lawfeedback.R;
 import com.codefair.lawfeedback.listener.SuccessGettingArticleInfoListener;
 import com.codefair.lawfeedback.model.ArticleInfo;
 import com.codefair.lawfeedback.model.RelatedJobInfo;
+import com.codefair.lawfeedback.model.UpdateArticleTO;
 import com.codefair.lawfeedback.network.RetrofitManager;
 
 import java.util.List;
@@ -24,6 +25,31 @@ public class ArticleViewActivity extends AppCompatActivity implements SuccessGet
 
         RetrofitManager.getInstance().setOnSuccessGettingArticleInfoListener(this);
         RetrofitManager.getInstance().getArticleInfo(getIntent().getLongExtra("articleId", 0L));
+
+        TextView articleViewAllGoodText = findViewById(R.id.articleViewAllGoodText);
+        TextView articleViewAllBadText = findViewById(R.id.articleViewAllBadText);
+
+        articleViewAllGoodText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long articleId = getIntent().getLongExtra("articleId", 0L);
+                long jobId = getIntent().getLongExtra("jobId", 0L);
+
+                UpdateArticleTO updateArticleTO = new UpdateArticleTO(jobId, 1, 0);
+                RetrofitManager.getInstance().updateArticle(articleId, updateArticleTO);
+            }
+        });
+
+        articleViewAllBadText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long articleId = getIntent().getLongExtra("articleId", 0L);
+                long jobId = getIntent().getLongExtra("jobId", 0L);
+
+                UpdateArticleTO updateArticleTO = new UpdateArticleTO(jobId, 0, 1);
+                RetrofitManager.getInstance().updateArticle(articleId, updateArticleTO);
+            }
+        });
     }
 
     @Override
