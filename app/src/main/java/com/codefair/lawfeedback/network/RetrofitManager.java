@@ -16,6 +16,7 @@ import com.codefair.lawfeedback.model.ArticleInfo;
 import com.codefair.lawfeedback.model.ArticleListItem;
 import com.codefair.lawfeedback.model.Job;
 import com.codefair.lawfeedback.model.LoginDTO;
+import com.codefair.lawfeedback.model.UpdateArticleTO;
 import com.codefair.lawfeedback.model.User;
 import com.codefair.lawfeedback.model.WriteArticleTO;
 import com.google.gson.GsonBuilder;
@@ -272,6 +273,30 @@ public class RetrofitManager {
     public void getArticleInfo(Long articleId) {
         final String methodName = "getArticleInfo";
         Call<ArticleInfo> req = service.getArticleInfo(articleId);
+        req.enqueue(new Callback<ArticleInfo>() {
+            @Override
+            public void onResponse(Call<ArticleInfo> call, Response<ArticleInfo> response) {
+                if (response.isSuccessful()) {
+                    if (mSuccessGettingArticleInfoListener != null) {
+                        Log.i(TAG, methodName + ": okResponse");
+                        mSuccessGettingArticleInfoListener.onOKResponse(response);
+                    }
+                } else {
+                    logForErrorResponse(response.code(), response.errorBody().toString(), methodName);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArticleInfo> call, Throwable t) {
+                String errorMessage = t.getMessage();
+                logForFailureConnection(errorMessage, methodName);
+            }
+        });
+    }
+
+    public void updateArticle(Long articleId, UpdateArticleTO updateArticleTO) {
+        final String methodName = "updateArticle";
+        Call<ArticleInfo> req = service.updateArticle(articleId, updateArticleTO);
         req.enqueue(new Callback<ArticleInfo>() {
             @Override
             public void onResponse(Call<ArticleInfo> call, Response<ArticleInfo> response) {

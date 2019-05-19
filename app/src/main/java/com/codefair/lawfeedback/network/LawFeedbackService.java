@@ -4,6 +4,7 @@ import com.codefair.lawfeedback.model.ArticleInfo;
 import com.codefair.lawfeedback.model.ArticleListItem;
 import com.codefair.lawfeedback.model.Job;
 import com.codefair.lawfeedback.model.LoginDTO;
+import com.codefair.lawfeedback.model.UpdateArticleTO;
 import com.codefair.lawfeedback.model.User;
 import com.codefair.lawfeedback.model.WriteArticleTO;
 import com.google.gson.JsonObject;
@@ -15,6 +16,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface LawFeedbackService {
@@ -41,4 +43,6 @@ public interface LawFeedbackService {
     @GET("/articles/{id}")
     Call<ArticleInfo> getArticleInfo(@Path("id") Long articleId);
 
+    @PUT("/articles/{id}")
+    Call<ArticleInfo> updateArticle(@Path("id") Long articleId, @Body UpdateArticleTO updateArticleTO);
 }
