@@ -35,7 +35,7 @@ public class ArticleViewActivity extends AppCompatActivity implements SuccessGet
                 long articleId = getIntent().getLongExtra("articleId", 0L);
                 long jobId = getIntent().getLongExtra("jobId", 0L);
 
-                UpdateArticleTO updateArticleTO = new UpdateArticleTO(jobId, 1L, 0L);
+                UpdateArticleTO updateArticleTO = new UpdateArticleTO(jobId, 1, 0);
                 RetrofitManager.getInstance().updateArticle(articleId, updateArticleTO);
             }
         });
@@ -46,7 +46,7 @@ public class ArticleViewActivity extends AppCompatActivity implements SuccessGet
                 long articleId = getIntent().getLongExtra("articleId", 0L);
                 long jobId = getIntent().getLongExtra("jobId", 0L);
 
-                UpdateArticleTO updateArticleTO = new UpdateArticleTO(jobId, 0L, 1L);
+                UpdateArticleTO updateArticleTO = new UpdateArticleTO(jobId, 0, 1);
                 RetrofitManager.getInstance().updateArticle(articleId, updateArticleTO);
             }
         });
