@@ -1,5 +1,6 @@
 package com.codefair.lawfeedback.network;
 
+import com.codefair.lawfeedback.model.ArticleInfo;
 import com.codefair.lawfeedback.model.ArticleListItem;
 import com.codefair.lawfeedback.model.Job;
 import com.codefair.lawfeedback.model.LoginDTO;
@@ -14,6 +15,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface LawFeedbackService {
     @Headers({"Content-Type:application/json"})
@@ -35,5 +37,8 @@ public interface LawFeedbackService {
 
     @POST("/articles")
     Call<JsonObject> writeArticle(@Body WriteArticleTO writeArticleTO);
+
+    @GET("/articles/{id}")
+    Call<ArticleInfo> getArticleInfo(@Path("id") Long articleId);
 
 }
