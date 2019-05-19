@@ -2,6 +2,7 @@ package com.codefair.lawfeedback.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,6 +25,25 @@ public class ArticleViewActivity extends AppCompatActivity implements SuccessGet
 
         RetrofitManager.getInstance().setOnSuccessGettingArticleInfoListener(this);
         RetrofitManager.getInstance().getArticleInfo(getIntent().getLongExtra("articleId", 0L));
+
+        TextView articleViewAllGoodText = findViewById(R.id.articleViewAllGoodText);
+        TextView articleViewAllBadText = findViewById(R.id.articleViewAllBadText);
+
+        articleViewAllGoodText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("ArticleViewActivity", getIntent().getLongExtra("articleId", 0L) +
+                        " " + getIntent().getLongExtra("jobId", 0L));
+                //TODO
+            }
+        });
+
+        articleViewAllBadText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+            }
+        });
     }
 
     @Override
