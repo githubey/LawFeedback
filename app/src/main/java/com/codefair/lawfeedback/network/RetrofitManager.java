@@ -200,10 +200,11 @@ public class RetrofitManager {
                 if (response.isSuccessful()) {
                     Toast.makeText(GlobalApplication.getGlobalContext(), R.string.login_success_message, Toast.LENGTH_LONG).show();
                     Long userId = response.body().get("userId").getAsLong();
+                    Long jobId = response.body().get("jobId").getAsLong();
                     String name = response.body().get("name").getAsString();
                     Log.i(TAG, methodName + ": loginSuccess, user_id = " + userId);
                     if (mSuccessLoginListener != null) {
-                        mSuccessLoginListener.onSuccessLogin(userId, name);
+                        mSuccessLoginListener.onSuccessLogin(userId, jobId, name);
                     }
                 } else {
                     Toast.makeText(GlobalApplication.getGlobalContext(), R.string.login_fail_message, Toast.LENGTH_LONG).show();

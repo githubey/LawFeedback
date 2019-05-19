@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements SuccessGettingArt
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, ArticleViewActivity.class);
                 intent.putExtra("userId", getIntent().getLongExtra("userId", 0L));
+                intent.putExtra("jobId", getIntent().getLongExtra("jobId", 0L));
                 intent.putExtra("articleId", articleItemList.get(position).getId());
                 startActivity(intent);
             }
