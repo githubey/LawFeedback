@@ -49,9 +49,11 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/articleViewJob1Layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end">
+            android:layout_gravity="end"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/articleViewJob1Text"
@@ -68,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
-                android:text="1"
+                android:text="0"
                 android:textSize="18dp" />
 
             <TextView
@@ -83,9 +85,11 @@
 
 
         <LinearLayout
+            android:id="@+id/articleViewJob2Layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end">
+            android:layout_gravity="end"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/articleViewJob2Text"
@@ -102,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
-                android:text="1"
+                android:text="0"
                 android:textSize="18dp" />
 
             <TextView
@@ -116,7 +120,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/writeArticleContent"
+            android:id="@+id/articleViewContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
