@@ -9,8 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true">
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:id="@+id/articleViewTitle"
@@ -125,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:width="330dp"
-            android:height="350dp"
+            android:height="400dp"
             android:inputType="textMultiLine"
             android:background="@drawable/border"
             android:scrollbars="vertical"
