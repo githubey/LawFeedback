@@ -49,8 +49,8 @@ public class ArticleViewActivity extends AppCompatActivity implements SuccessGet
         assert articleInfo != null;
         articleViewTitle.setText(articleInfo.getTitle());
         articleViewContent.setText(articleInfo.getContent());
-        articleViewAllGoodText.setText("" + articleInfo.getGood_ex());
-        articleViewAllBadText.setText("" + articleInfo.getBad_ex());
+        articleViewAllGoodText.setText(String.valueOf(articleInfo.getGood_ex()));
+        articleViewAllBadText.setText(String.valueOf(articleInfo.getBad_ex()));
 
         List<RelatedJobInfo> relatedJobInfoList = articleInfo.getRelatedJobInfoList();
         View articleViewJob1Layout = findViewById(R.id.articleViewJob1Layout);
@@ -58,13 +58,13 @@ public class ArticleViewActivity extends AppCompatActivity implements SuccessGet
         if (relatedJobInfoList != null && relatedJobInfoList.size() > 0) {
             articleViewJob1Layout.setVisibility(View.VISIBLE);
             articleViewJob1Text.setText(relatedJobInfoList.get(0).getJobName());
-            articleViewJob1GoodText.setText("" + relatedJobInfoList.get(0).getGood());
-            articleViewJob1BadText.setText("" + relatedJobInfoList.get(0).getBad());
+            articleViewJob1GoodText.setText(String.valueOf(relatedJobInfoList.get(0).getGood()));
+            articleViewJob1BadText.setText(String.valueOf(relatedJobInfoList.get(0).getBad()));
             if (relatedJobInfoList.size() > 1) {
                 articleViewJob2Layout.setVisibility(View.VISIBLE);
                 articleViewJob2Text.setText(relatedJobInfoList.get(1).getJobName());
-                articleViewJob2GoodText.setText("" + relatedJobInfoList.get(1).getGood());
-                articleViewJob2BadText.setText("" + relatedJobInfoList.get(1).getBad());
+                articleViewJob2GoodText.setText(String.valueOf(relatedJobInfoList.get(1).getGood()));
+                articleViewJob2BadText.setText(String.valueOf(relatedJobInfoList.get(1).getBad()));
             }
         }
     }
