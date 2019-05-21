@@ -14,6 +14,7 @@ import com.codefair.lawfeedback.model.ReplyListViewAdapter;
 import com.codefair.lawfeedback.model.WrtieReplyTO;
 import com.codefair.lawfeedback.network.RetrofitManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Response;
@@ -30,7 +31,6 @@ public class ReplyViewActivity extends AppCompatActivity implements SuccessWrite
         RetrofitManager.getInstance().setOnSuccessWriteReplyListener(this);
         RetrofitManager.getInstance().setOnSuccessGettingReplyListListener(this);
 
-        //TODO
         boolean isRelatedUser = getIntent().getBooleanExtra("isRelatedUser", false);
         boolean isRelatedView = getIntent().getBooleanExtra("isRelatedView", false);
         RetrofitManager.getInstance().getReplyList(getIntent().getLongExtra("articleId", 0L), isRelatedView);
@@ -71,8 +71,37 @@ public class ReplyViewActivity extends AppCompatActivity implements SuccessWrite
 
     @Override
     public void onOKResponse(Response<List<ReplyListItem>> response) {
-        replyListItemList = response.body();
+        List<ReplyListItem> responseList = response.body();
+        replyListItemList = new ArrayList<>();
+
+        ReplyListItem maxGoodItem = null, secondMaxGoodItem = null;
+        boolean maxGoodExist = false, secondGoodExist = false;
+        if (responseList.size() > 0) {
+            maxGoodItem = responseList.get(0);
+            maxGoodExist = true;
+        }
+        if (responseList.size() > 1) {
+            secondMaxGoodItem = responseList.get(1);
+            secondGoodExist = true;
+        }
+        for (int i = 1; i < responseList.size(); i++) {
+            ReplyListItem replyListItem = responseList.get(i);
+            if (maxGoodItem.getGood() < replyListItem.getGood()) {
+                secondMaxGoodItem = maxGoodItem;
+                maxGoodItem = replyListItem;
+            } else if (secondMaxGoodItem.getGood() < replyListItem.getGood()) {
+                secondMaxGoodItem = replyListItem;
+            }
+        }
+        if (maxGoodItem != null) {
+            replyListItemList.add(maxGoodItem);
+        }
+        if (secondMaxGoodItem != null) {
+            replyListItemList.add(secondMaxGoodItem);
+        }
+
+        replyListItemList.addAll(responseList);
         ListView mainListView = findViewById(R.id.replyListView);
-        mainListView.setAdapter(new ReplyListViewAdapter(replyListItemList));
+        mainListView.setAdapter(new ReplyListViewAdapter(replyListItemList, maxGoodExist, secondGoodExist));
     }
 }

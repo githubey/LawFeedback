@@ -15,9 +15,13 @@ import java.util.List;
 public class ReplyListViewAdapter extends BaseAdapter {
 
     private List<ReplyListItem> replyListItemList = new ArrayList<>();
+    private boolean maxGoodExist;
+    private boolean secondGoodExist;
 
-    public ReplyListViewAdapter(List<ReplyListItem> replyListItemList) {
+    public ReplyListViewAdapter(List<ReplyListItem> replyListItemList, boolean maxGoodExist, boolean secondGoodExist) {
         this.replyListItemList = replyListItemList;
+        this.maxGoodExist = maxGoodExist;
+        this.secondGoodExist = secondGoodExist;
     }
 
     @Override
@@ -51,6 +55,13 @@ public class ReplyListViewAdapter extends BaseAdapter {
         ReplyListItem replyListItem = replyListItemList.get(position);
         replyTextView.setText(replyListItem.getContent());
         jobTextView.setText(replyListItem.getJobName());
+
+        View maxGoodReply = convertView.findViewById(R.id.starReplyInReplyListItem);
+        if ((maxGoodExist && position == 0) || (secondGoodExist && position == 1)) {
+            maxGoodReply.setVisibility(View.VISIBLE);
+        } else {
+            maxGoodReply.setVisibility(View.INVISIBLE);
+        }
 
         return convertView;
     }
