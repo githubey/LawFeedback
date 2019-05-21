@@ -8,6 +8,7 @@ import com.codefair.lawfeedback.R;
 import com.codefair.lawfeedback.listener.SuccessGettingArticleInfoListener;
 import com.codefair.lawfeedback.listener.SuccessGettingArticleListListener;
 import com.codefair.lawfeedback.listener.SuccessGettingJobListListener;
+import com.codefair.lawfeedback.listener.SuccessGettingReplyListListener;
 import com.codefair.lawfeedback.listener.SuccessLoginListener;
 import com.codefair.lawfeedback.listener.SuccessRegisterationLawmakerListListener;
 import com.codefair.lawfeedback.listener.SuccessRegisterationNormalListener;
@@ -17,6 +18,7 @@ import com.codefair.lawfeedback.model.ArticleInfo;
 import com.codefair.lawfeedback.model.ArticleListItem;
 import com.codefair.lawfeedback.model.Job;
 import com.codefair.lawfeedback.model.LoginDTO;
+import com.codefair.lawfeedback.model.ReplyListItem;
 import com.codefair.lawfeedback.model.UpdateArticleTO;
 import com.codefair.lawfeedback.model.User;
 import com.codefair.lawfeedback.model.WriteArticleTO;
@@ -49,6 +51,7 @@ public class RetrofitManager {
     private List<SuccessWriteArticleListener> mSuccessWriteArticleListenerList = new ArrayList<>();
     private SuccessGettingArticleInfoListener mSuccessGettingArticleInfoListener;
     private SuccessWriteReplyListener mSuccessWriteReplyListener;
+    private SuccessGettingReplyListListener mSuccessGettingReplyListListener;
 
     private RetrofitManager() {
         retrofit = new Retrofit.Builder().baseUrl(requestURL).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create())).build();
@@ -93,6 +96,10 @@ public class RetrofitManager {
         this.mSuccessWriteReplyListener = mSuccessWriteReplyListener;
     }
 
+    public void setOnSuccessGettingReplyListListener(SuccessGettingReplyListListener mSuccessGettingReplyListListener) {
+        this.mSuccessGettingReplyListListener = mSuccessGettingReplyListListener;
+    }
+
     public void removeSuccessGettingJobListListener() {
         this.mSuccessGettingJobListListener = null;
     }
@@ -115,6 +122,10 @@ public class RetrofitManager {
 
     public void removeSuccessGettingArticleInfoListener() {
         this.mSuccessGettingArticleInfoListener = null;
+    }
+
+    public void removeSuccessGettingReplyListListener() {
+        this.mSuccessGettingReplyListListener = null;
     }
 
     public void removeSuccessWriteReplyListener() {
@@ -329,9 +340,9 @@ public class RetrofitManager {
         });
     }
 
-    public void writeReply(WrtieReplyTO wrtieReplyTO) {
+    public void writeReply(Long articleId, WrtieReplyTO wrtieReplyTO) {
         final String methodName = "writeReply";
-        Call<JsonObject> req = service.writeReply(wrtieReplyTO);
+        Call<JsonObject> req = service.writeReply(articleId, wrtieReplyTO);
         req.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -349,6 +360,30 @@ public class RetrofitManager {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 logForFailureConnection(t.getMessage(), methodName);
+            }
+        });
+    }
+
+    public void getReplyList(long articleId, boolean isRelatedView) {
+        final String methodName = "getReplyList";
+        Call<List<ReplyListItem>> req = service.getReplyList(articleId, isRelatedView);
+        req.enqueue(new Callback<List<ReplyListItem>>() {
+            @Override
+            public void onResponse(Call<List<ReplyListItem>> call, Response<List<ReplyListItem>> response) {
+                if (response.isSuccessful()) {
+                    if (mSuccessGettingReplyListListener != null) {
+                        Log.i(TAG, methodName + ": okResponse");
+                        mSuccessGettingReplyListListener.onOKResponse(response);
+                    }
+                } else {
+                    logForErrorResponse(response.code(), response.errorBody().toString(), methodName);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ReplyListItem>> call, Throwable t) {
+                String errorMessage = t.getMessage();
+                logForFailureConnection(errorMessage, methodName);
             }
         });
     }

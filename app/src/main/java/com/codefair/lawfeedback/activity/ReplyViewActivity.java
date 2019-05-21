@@ -6,20 +6,31 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.codefair.lawfeedback.R;
+import com.codefair.lawfeedback.listener.SuccessGettingReplyListListener;
 import com.codefair.lawfeedback.listener.SuccessWriteReplyListener;
+import com.codefair.lawfeedback.model.ReplyListItem;
 import com.codefair.lawfeedback.model.WrtieReplyTO;
 import com.codefair.lawfeedback.network.RetrofitManager;
 
-public class ReplyViewActivity extends AppCompatActivity implements SuccessWriteReplyListener {
+import java.util.List;
+
+import retrofit2.Response;
+
+public class ReplyViewActivity extends AppCompatActivity implements SuccessWriteReplyListener, SuccessGettingReplyListListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reply_view);
 
+        RetrofitManager.getInstance().setOnSuccessWriteReplyListener(this);
+        RetrofitManager.getInstance().setOnSuccessGettingReplyListListener(this);
+
         //TODO
         boolean isRelatedUser = getIntent().getBooleanExtra("isRelatedUser", false);
-        if (getIntent().getBooleanExtra("isRelatedView", false)) {
+        boolean isRelatedView = getIntent().getBooleanExtra("isRelatedView", false);
+        RetrofitManager.getInstance().getReplyList(getIntent().getLongExtra("articleId", 0L), isRelatedView);
+        if (isRelatedView) {
             if (!isRelatedUser) {
                 findViewById(R.id.writeReplyLayout).setVisibility(View.GONE);
             }
@@ -35,13 +46,25 @@ public class ReplyViewActivity extends AppCompatActivity implements SuccessWrite
                 long articleId = getIntent().getLongExtra("articleId", 0L);
                 long userId = getIntent().getLongExtra("userId", 0L);
                 EditText replyContent = findViewById(R.id.writeReplyContent);
-                RetrofitManager.getInstance().writeReply(new WrtieReplyTO(articleId, userId, replyContent.getText().toString()));
+                RetrofitManager.getInstance().writeReply(articleId, new WrtieReplyTO(userId, replyContent.getText().toString()));
             }
         });
     }
 
     @Override
+    protected void onDestroy() {
+        RetrofitManager.getInstance().removeSuccessGettingReplyListListener();
+        RetrofitManager.getInstance().removeSuccessWriteReplyListener();
+        super.onDestroy();
+    }
+
+    @Override
     public void onSuccessWriteReply() {
+        //TODO
+    }
+
+    @Override
+    public void onOKResponse(Response<List<ReplyListItem>> response) {
         //TODO
     }
 }

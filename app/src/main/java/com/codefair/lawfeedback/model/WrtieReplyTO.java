@@ -2,17 +2,8 @@ package com.codefair.lawfeedback.model;
 
 public class WrtieReplyTO {
 
-    private Long articleId;
     private Long userId;
     private String replyContent;
-
-    public Long getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(Long articleId) {
-        this.articleId = articleId;
-    }
 
     public Long getUserId() {
         return userId;
@@ -30,8 +21,7 @@ public class WrtieReplyTO {
         this.replyContent = replyContent;
     }
 
-    public WrtieReplyTO(Long articleId, Long userId, String replyContent) {
-        this.articleId = articleId;
+    public WrtieReplyTO(Long userId, String replyContent) {
         this.userId = userId;
         this.replyContent = replyContent;
     }

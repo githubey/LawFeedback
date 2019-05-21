@@ -4,6 +4,7 @@ import com.codefair.lawfeedback.model.ArticleInfo;
 import com.codefair.lawfeedback.model.ArticleListItem;
 import com.codefair.lawfeedback.model.Job;
 import com.codefair.lawfeedback.model.LoginDTO;
+import com.codefair.lawfeedback.model.ReplyListItem;
 import com.codefair.lawfeedback.model.UpdateArticleTO;
 import com.codefair.lawfeedback.model.User;
 import com.codefair.lawfeedback.model.WriteArticleTO;
@@ -19,6 +20,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface LawFeedbackService {
     @Headers({"Content-Type:application/json"})
@@ -47,6 +49,9 @@ public interface LawFeedbackService {
     @PUT("/articles/{id}")
     Call<ArticleInfo> updateArticle(@Path("id") Long articleId, @Body UpdateArticleTO updateArticleTO);
 
-    @POST("/comments")
-    Call<JsonObject> writeReply(@Body WrtieReplyTO wrtieReplyTO);
+    @POST("/articles/{id}/comments")
+    Call<JsonObject> writeReply(@Path("id") Long articleId, @Body WrtieReplyTO wrtieReplyTO);
+
+    @GET("/articles/{id}/comments")
+    Call<List<ReplyListItem>> getReplyList(@Path("id") Long articleId, @Query("isRelatedView") Boolean isRelatedView);
 }
