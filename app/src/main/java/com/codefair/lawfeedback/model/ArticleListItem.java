@@ -1,11 +1,14 @@
 package com.codefair.lawfeedback.model;
 
+import java.util.Set;
+
 public class ArticleListItem {
 
     private Long id;
     private Long userId;
     private String title;
     private String summary;
+    private Set<Long> jobIdSet;
 
     public Long getId() {
         return id;
@@ -37,5 +40,13 @@ public class ArticleListItem {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public Set<Long> getJobIdSet() {
+        return jobIdSet;
+    }
+
+    public void setJobIdSet(Set<Long> jobIdSet) {
+        this.jobIdSet = jobIdSet;
     }
 }
