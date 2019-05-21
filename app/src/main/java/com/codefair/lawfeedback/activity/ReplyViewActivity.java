@@ -21,11 +21,11 @@ public class ReplyViewActivity extends AppCompatActivity implements SuccessWrite
         boolean isRelatedUser = getIntent().getBooleanExtra("isRelatedUser", false);
         if (getIntent().getBooleanExtra("isRelatedView", false)) {
             if (!isRelatedUser) {
-                findViewById(R.id.writeReplyContent).setVisibility(View.GONE);
+                findViewById(R.id.writeReplyLayout).setVisibility(View.GONE);
             }
         } else {
             if (isRelatedUser) {
-                findViewById(R.id.writeReplyContent).setVisibility(View.GONE);
+                findViewById(R.id.writeReplyLayout).setVisibility(View.GONE);
             }
         }
 
