@@ -8,18 +8,18 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/articleViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="제목"
-            android:padding="10dp"
             android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="제목"
             android:textSize="18dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -30,8 +30,8 @@
                 android:id="@+id/articleViewAllGoodText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:drawableStart="@drawable/ic_thumb_up_black_24dp"
                 android:text="1"
                 android:textSize="18dp" />
@@ -40,11 +40,11 @@
                 android:id="@+id/articleViewAllBadText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:drawableStart="@drawable/ic_thumb_down_black_24dp"
                 android:text="0"
-                android:textSize="18dp"/>
+                android:textSize="18dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -67,8 +67,8 @@
                 android:id="@+id/articleViewJob1GoodText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:text="0"
                 android:textSize="18dp" />
 
@@ -76,10 +76,10 @@
                 android:id="@+id/articleViewJob1BadText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:text="0"
-                android:textSize="18dp"/>
+                android:textSize="18dp" />
         </LinearLayout>
 
 
@@ -103,8 +103,8 @@
                 android:id="@+id/articleViewJob2GoodText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:text="0"
                 android:textSize="18dp" />
 
@@ -112,10 +112,10 @@
                 android:id="@+id/articleViewJob2BadText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:text="0"
-                android:textSize="18dp"/>
+                android:textSize="18dp" />
         </LinearLayout>
 
         <TextView
@@ -125,10 +125,9 @@
             android:layout_marginTop="10dp"
             android:width="330dp"
             android:height="400dp"
-            android:inputType="textMultiLine"
             android:background="@drawable/border"
-            android:scrollbars="vertical"
+            android:gravity="top"
             android:padding="20dp"
-            android:gravity="top"/>
+            android:scrollbars="vertical" />
     </LinearLayout>
 </RelativeLayout>
