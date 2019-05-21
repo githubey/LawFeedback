@@ -64,7 +64,9 @@ public class ReplyViewActivity extends AppCompatActivity implements SuccessWrite
 
     @Override
     public void onSuccessWriteReply() {
-        //TODO
+        long articleId = getIntent().getLongExtra("articleId", 0L);
+        boolean isRelatedView = getIntent().getBooleanExtra("isRelatedView", false);
+        RetrofitManager.getInstance().getReplyList(articleId, isRelatedView);
     }
 
     @Override
