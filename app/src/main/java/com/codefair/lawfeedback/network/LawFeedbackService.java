@@ -7,6 +7,7 @@ import com.codefair.lawfeedback.model.LoginDTO;
 import com.codefair.lawfeedback.model.UpdateArticleTO;
 import com.codefair.lawfeedback.model.User;
 import com.codefair.lawfeedback.model.WriteArticleTO;
+import com.codefair.lawfeedback.model.WrtieReplyTO;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -45,4 +46,7 @@ public interface LawFeedbackService {
 
     @PUT("/articles/{id}")
     Call<ArticleInfo> updateArticle(@Path("id") Long articleId, @Body UpdateArticleTO updateArticleTO);
+
+    @POST("/comments")
+    Call<JsonObject> writeReply(@Body WrtieReplyTO wrtieReplyTO);
 }
