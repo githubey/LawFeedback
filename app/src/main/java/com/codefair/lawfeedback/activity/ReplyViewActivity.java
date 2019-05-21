@@ -43,6 +43,5 @@ public class ReplyViewActivity extends AppCompatActivity implements SuccessWrite
     @Override
     public void onSuccessWriteReply() {
         //TODO
-
     }
 }
