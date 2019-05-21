@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.codefair.lawfeedback.R;
 import com.codefair.lawfeedback.listener.SuccessGettingReplyListListener;
 import com.codefair.lawfeedback.listener.SuccessWriteReplyListener;
 import com.codefair.lawfeedback.model.ReplyListItem;
+import com.codefair.lawfeedback.model.ReplyListViewAdapter;
 import com.codefair.lawfeedback.model.WrtieReplyTO;
 import com.codefair.lawfeedback.network.RetrofitManager;
 
@@ -17,6 +19,8 @@ import java.util.List;
 import retrofit2.Response;
 
 public class ReplyViewActivity extends AppCompatActivity implements SuccessWriteReplyListener, SuccessGettingReplyListListener {
+
+    private List<ReplyListItem> replyListItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,8 @@ public class ReplyViewActivity extends AppCompatActivity implements SuccessWrite
 
     @Override
     public void onOKResponse(Response<List<ReplyListItem>> response) {
-        //TODO
+        replyListItemList = response.body();
+        ListView mainListView = findViewById(R.id.replyListView);
+        mainListView.setAdapter(new ReplyListViewAdapter(replyListItemList));
     }
 }
