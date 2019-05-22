@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LawFeedback</string>
+    <string name="app_name">My Right</string>
     <string name="login_id_hint">Email</string>
     <string name="login_password_hint">Password</string>
     <string name="register_nickname_hint">닉네임</string>
