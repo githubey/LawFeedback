@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.codefair.lawfeedback.R;
 import com.codefair.lawfeedback.listener.SuccessGettingReplyInfoListener;
@@ -127,10 +126,19 @@ public class ReplyViewActivity extends AppCompatActivity implements SuccessWrite
         this.replyListItemList.get(position).setGood(replyListItem.getGood());
         this.replyListItemList.get(position).setBad(replyListItem.getBad());
 
-        TextView goodTextView = view.findViewById(R.id.goodTextInReplyListItem);
-        TextView badTextView = view.findViewById(R.id.badTextInReplyListItem);
-
-        goodTextView.setText(String.valueOf(replyListItem.getGood()));
-        badTextView.setText(String.valueOf(replyListItem.getBad()));
+        ReplyListItem replyListItem1 = replyListItemList.get(0);
+        ReplyListItem replyListItem2 = replyListItemList.get(1);
+        ReplyListItem replyListItemPosition = replyListItemList.get(position);
+        if (!replyListItem1.equals(replyListItemPosition)) {
+            if (replyListItem1.getGood() < replyListItemPosition.getGood()) {
+                replyListItemList.set(1, replyListItem1);
+                replyListItemList.set(0, replyListItemPosition);
+            } else if (replyListItem2.getGood() < replyListItemPosition.getGood()) {
+                replyListItemList.set(1, replyListItemPosition);
+            }
+        }
+        ListView replyListView = findViewById(R.id.replyListView);
+        ReplyListViewAdapter adapter = (ReplyListViewAdapter) replyListView.getAdapter();
+        adapter.notifyDataSetChanged();
     }
 }
