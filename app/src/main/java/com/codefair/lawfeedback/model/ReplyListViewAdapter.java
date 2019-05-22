@@ -51,10 +51,14 @@ public class ReplyListViewAdapter extends BaseAdapter {
 
         TextView replyTextView = convertView.findViewById(R.id.replyTextViewInReplyListItem);
         TextView jobTextView = convertView.findViewById(R.id.jobTextViewInReplyListItem);
+        TextView goodTextView = convertView.findViewById(R.id.goodTextInReplyListItem);
+        TextView badTextView = convertView.findViewById(R.id.badTextInReplyListItem);
 
         ReplyListItem replyListItem = replyListItemList.get(position);
         replyTextView.setText(replyListItem.getContent());
         jobTextView.setText(replyListItem.getJobName());
+        goodTextView.setText(String.valueOf(replyListItem.getGood()));
+        badTextView.setText(String.valueOf(replyListItem.getBad()));
 
         View maxGoodReply = convertView.findViewById(R.id.starReplyInReplyListItem);
         if ((maxGoodExist && position == 0) || (secondGoodExist && position == 1)) {

@@ -59,18 +59,23 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true">
 
-                    <ImageView
-                        android:id="@+id/goodImageInReplyListItem"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/ic_thumb_up_black_24dp" />
-
-                    <ImageView
-                        android:id="@+id/badImageInReplyListItem"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                    <TextView
+                        android:id="@+id/goodTextInReplyListItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/ic_thumb_down_black_24dp" />
+                        android:drawableStart="@drawable/ic_thumb_up_black_30dp"
+                        android:text="0"
+                        android:textSize="30dp"/>
+
+                    <TextView
+                        android:id="@+id/badTextInReplyListItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:drawableStart="@drawable/ic_thumb_down_black_30dp"
+                        android:text="0"
+                        android:textSize="30dp" />
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
