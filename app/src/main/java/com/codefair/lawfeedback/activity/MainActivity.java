@@ -87,7 +87,14 @@ public class MainActivity extends AppCompatActivity implements SuccessGettingArt
 
     @Override
     public void onListImageClick(int position, boolean isRelated) {
-        //TODO
+        long jobId = getIntent().getLongExtra("jobId", 0L);
+        Intent intent = new Intent(MainActivity.this, ReplyViewActivity.class);
+        intent.putExtra("userId", getIntent().getLongExtra("userId", 0L));
+        intent.putExtra("jobId", jobId);
+        intent.putExtra("articleId", articleItemList.get(position).getId());
+        intent.putExtra("isRelatedView", isRelated);
+        intent.putExtra("isRelatedUser", articleItemList.get(position).getJobIdSet().contains(jobId));
+        startActivity(intent);
     }
 
     @Override
