@@ -1,6 +1,7 @@
 package com.codefair.lawfeedback.model;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,11 +55,29 @@ public class ReplyListViewAdapter extends BaseAdapter {
         TextView goodTextView = convertView.findViewById(R.id.goodTextInReplyListItem);
         TextView badTextView = convertView.findViewById(R.id.badTextInReplyListItem);
 
-        ReplyListItem replyListItem = replyListItemList.get(position);
+        final ReplyListItem replyListItem = replyListItemList.get(position);
         replyTextView.setText(replyListItem.getContent());
         jobTextView.setText(replyListItem.getJobName());
         goodTextView.setText(String.valueOf(replyListItem.getGood()));
         badTextView.setText(String.valueOf(replyListItem.getBad()));
+
+        goodTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+                Log.i("ReplyListViewAdapter", "replyId: " + replyListItem.getId());
+                Log.i("ReplyListViewAdapter", "articleId: " + replyListItem.getArticleId());
+                Log.i("ReplyListViewAdapter", "good: " + replyListItem.getGood());
+                Log.i("ReplyListViewAdapter", "bad: " + replyListItem.getBad());
+            }
+        });
+
+        badTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+            }
+        });
 
         View maxGoodReply = convertView.findViewById(R.id.starReplyInReplyListItem);
         if ((maxGoodExist && position == 0) || (secondGoodExist && position == 1)) {
