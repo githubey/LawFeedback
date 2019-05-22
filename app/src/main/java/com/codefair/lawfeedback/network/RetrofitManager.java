@@ -1,6 +1,7 @@
 package com.codefair.lawfeedback.network;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.codefair.lawfeedback.GlobalApplication;
@@ -8,6 +9,7 @@ import com.codefair.lawfeedback.R;
 import com.codefair.lawfeedback.listener.SuccessGettingArticleInfoListener;
 import com.codefair.lawfeedback.listener.SuccessGettingArticleListListener;
 import com.codefair.lawfeedback.listener.SuccessGettingJobListListener;
+import com.codefair.lawfeedback.listener.SuccessGettingReplyInfoListener;
 import com.codefair.lawfeedback.listener.SuccessGettingReplyListListener;
 import com.codefair.lawfeedback.listener.SuccessLoginListener;
 import com.codefair.lawfeedback.listener.SuccessRegisterationLawmakerListListener;
@@ -21,6 +23,7 @@ import com.codefair.lawfeedback.model.LoginDTO;
 import com.codefair.lawfeedback.model.ReplyListItem;
 import com.codefair.lawfeedback.model.UpdateArticleTO;
 import com.codefair.lawfeedback.model.User;
+import com.codefair.lawfeedback.model.VoteReplyTO;
 import com.codefair.lawfeedback.model.WriteArticleTO;
 import com.codefair.lawfeedback.model.WrtieReplyTO;
 import com.google.gson.GsonBuilder;
@@ -52,6 +55,7 @@ public class RetrofitManager {
     private SuccessGettingArticleInfoListener mSuccessGettingArticleInfoListener;
     private SuccessWriteReplyListener mSuccessWriteReplyListener;
     private SuccessGettingReplyListListener mSuccessGettingReplyListListener;
+    private SuccessGettingReplyInfoListener mSuccessGettingReplyInfoListener;
 
     private RetrofitManager() {
         retrofit = new Retrofit.Builder().baseUrl(requestURL).addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create())).build();
@@ -100,6 +104,10 @@ public class RetrofitManager {
         this.mSuccessGettingReplyListListener = mSuccessGettingReplyListListener;
     }
 
+    public void setOnSuccessGettingReplyInfoListener(SuccessGettingReplyInfoListener mSuccessGettingReplyInfoListener) {
+        this.mSuccessGettingReplyInfoListener = mSuccessGettingReplyInfoListener;
+    }
+
     public void removeSuccessGettingJobListListener() {
         this.mSuccessGettingJobListListener = null;
     }
@@ -126,6 +134,10 @@ public class RetrofitManager {
 
     public void removeSuccessGettingReplyListListener() {
         this.mSuccessGettingReplyListListener = null;
+    }
+
+    public void removeSuccessGettingReplyInfoListener() {
+        this.mSuccessGettingReplyInfoListener = null;
     }
 
     public void removeSuccessWriteReplyListener() {
@@ -382,6 +394,30 @@ public class RetrofitManager {
 
             @Override
             public void onFailure(Call<List<ReplyListItem>> call, Throwable t) {
+                String errorMessage = t.getMessage();
+                logForFailureConnection(errorMessage, methodName);
+            }
+        });
+    }
+
+    public void voteReply(Long articleId, Long commentId, final VoteReplyTO voteReplyTO, final int position, final View view) {
+        final String methodName = "voteReply";
+        Call<ReplyListItem> req = service.voteReply(articleId, commentId, voteReplyTO);
+        req.enqueue(new Callback<ReplyListItem>() {
+            @Override
+            public void onResponse(Call<ReplyListItem> call, Response<ReplyListItem> response) {
+                if (response.isSuccessful()) {
+                    if (mSuccessGettingReplyInfoListener != null) {
+                        Log.i(TAG, methodName + ": okResponse");
+                        mSuccessGettingReplyInfoListener.onSuccessGetReplyInfo(response.body(), position, view);
+                    }
+                } else {
+                    logForErrorResponse(response.code(), response.errorBody().toString(), methodName);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReplyListItem> call, Throwable t) {
                 String errorMessage = t.getMessage();
                 logForFailureConnection(errorMessage, methodName);
             }

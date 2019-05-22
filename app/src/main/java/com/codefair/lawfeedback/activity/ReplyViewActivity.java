@@ -6,8 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.codefair.lawfeedback.R;
+import com.codefair.lawfeedback.listener.SuccessGettingReplyInfoListener;
 import com.codefair.lawfeedback.listener.SuccessGettingReplyListListener;
 import com.codefair.lawfeedback.listener.SuccessWriteReplyListener;
 import com.codefair.lawfeedback.model.ReplyListItem;
@@ -20,7 +22,7 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public class ReplyViewActivity extends AppCompatActivity implements SuccessWriteReplyListener, SwipeRefreshLayout.OnRefreshListener, SuccessGettingReplyListListener {
+public class ReplyViewActivity extends AppCompatActivity implements SuccessWriteReplyListener, SwipeRefreshLayout.OnRefreshListener, SuccessGettingReplyListListener, SuccessGettingReplyInfoListener {
 
     private SwipeRefreshLayout replySwipeRefreshLayout;
     private List<ReplyListItem> replyListItemList;
@@ -35,6 +37,7 @@ public class ReplyViewActivity extends AppCompatActivity implements SuccessWrite
 
         RetrofitManager.getInstance().setOnSuccessWriteReplyListener(this);
         RetrofitManager.getInstance().setOnSuccessGettingReplyListListener(this);
+        RetrofitManager.getInstance().setOnSuccessGettingReplyInfoListener(this);
 
         boolean isRelatedUser = getIntent().getBooleanExtra("isRelatedUser", false);
         boolean isRelatedView = getIntent().getBooleanExtra("isRelatedView", false);
@@ -64,6 +67,7 @@ public class ReplyViewActivity extends AppCompatActivity implements SuccessWrite
     protected void onDestroy() {
         RetrofitManager.getInstance().removeSuccessGettingReplyListListener();
         RetrofitManager.getInstance().removeSuccessWriteReplyListener();
+        RetrofitManager.getInstance().removeSuccessGettingReplyInfoListener();
         super.onDestroy();
     }
 
@@ -106,8 +110,8 @@ public class ReplyViewActivity extends AppCompatActivity implements SuccessWrite
         }
 
         replyListItemList.addAll(responseList);
-        ListView mainListView = findViewById(R.id.replyListView);
-        mainListView.setAdapter(new ReplyListViewAdapter(replyListItemList, maxGoodExist, secondGoodExist));
+        ListView replyListView = findViewById(R.id.replyListView);
+        replyListView.setAdapter(new ReplyListViewAdapter(replyListItemList, maxGoodExist, secondGoodExist));
     }
 
     @Override
@@ -116,5 +120,17 @@ public class ReplyViewActivity extends AppCompatActivity implements SuccessWrite
         boolean isRelatedView = getIntent().getBooleanExtra("isRelatedView", false);
         RetrofitManager.getInstance().getReplyList(articleId, isRelatedView);
         replySwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onSuccessGetReplyInfo(ReplyListItem replyListItem, int position, View view) {
+        this.replyListItemList.get(position).setGood(replyListItem.getGood());
+        this.replyListItemList.get(position).setBad(replyListItem.getBad());
+
+        TextView goodTextView = view.findViewById(R.id.goodTextInReplyListItem);
+        TextView badTextView = view.findViewById(R.id.badTextInReplyListItem);
+
+        goodTextView.setText(String.valueOf(replyListItem.getGood()));
+        badTextView.setText(String.valueOf(replyListItem.getBad()));
     }
 }

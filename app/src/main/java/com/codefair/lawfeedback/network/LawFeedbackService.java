@@ -7,6 +7,7 @@ import com.codefair.lawfeedback.model.LoginDTO;
 import com.codefair.lawfeedback.model.ReplyListItem;
 import com.codefair.lawfeedback.model.UpdateArticleTO;
 import com.codefair.lawfeedback.model.User;
+import com.codefair.lawfeedback.model.VoteReplyTO;
 import com.codefair.lawfeedback.model.WriteArticleTO;
 import com.codefair.lawfeedback.model.WrtieReplyTO;
 import com.google.gson.JsonObject;
@@ -54,4 +55,7 @@ public interface LawFeedbackService {
 
     @GET("/articles/{id}/comments")
     Call<List<ReplyListItem>> getReplyList(@Path("id") Long articleId, @Query("isRelatedView") Boolean isRelatedView);
+
+    @PUT("/articles/{id}/comments/{commentId}")
+    Call<ReplyListItem> voteReply(@Path("id") Long articleId, @Path("commentId") Long commentId, @Body VoteReplyTO voteReplyTO);
 }
