@@ -1,6 +1,7 @@
 package com.codefair.lawfeedback.activity;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -19,14 +20,18 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public class ReplyViewActivity extends AppCompatActivity implements SuccessWriteReplyListener, SuccessGettingReplyListListener {
+public class ReplyViewActivity extends AppCompatActivity implements SuccessWriteReplyListener, SwipeRefreshLayout.OnRefreshListener, SuccessGettingReplyListListener {
 
+    private SwipeRefreshLayout replySwipeRefreshLayout;
     private List<ReplyListItem> replyListItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reply_view);
+
+        replySwipeRefreshLayout = findViewById(R.id.replySwipeLayout);
+        replySwipeRefreshLayout.setOnRefreshListener(this);
 
         RetrofitManager.getInstance().setOnSuccessWriteReplyListener(this);
         RetrofitManager.getInstance().setOnSuccessGettingReplyListListener(this);
@@ -103,5 +108,13 @@ public class ReplyViewActivity extends AppCompatActivity implements SuccessWrite
         replyListItemList.addAll(responseList);
         ListView mainListView = findViewById(R.id.replyListView);
         mainListView.setAdapter(new ReplyListViewAdapter(replyListItemList, maxGoodExist, secondGoodExist));
+    }
+
+    @Override
+    public void onRefresh() {
+        long articleId = getIntent().getLongExtra("articleId", 0L);
+        boolean isRelatedView = getIntent().getBooleanExtra("isRelatedView", false);
+        RetrofitManager.getInstance().getReplyList(articleId, isRelatedView);
+        replySwipeRefreshLayout.setRefreshing(false);
     }
 }
