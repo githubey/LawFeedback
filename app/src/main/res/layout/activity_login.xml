@@ -1,90 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_login"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.LoginActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/activity_login"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".activity.LoginActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:orientation="vertical">
-
-        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/idText"
+        <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:width="280dp"
-                android:drawableStart="@drawable/ic_mail_outline_black_24dp"
-                android:hint="@string/login_id_hint"
-                android:padding="10dp"
-                android:inputType="text"
-                android:privateImeOptions="defaultInputmode=english" />
+                android:orientation="vertical">
 
             <EditText
-                android:id="@+id/passwordText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:width="280dp"
-                android:drawableStart="@drawable/ic_lock_black_24dp"
-                android:hint="@string/login_password_hint"
-                android:inputType="textPassword"
-                android:padding="10dp" />
+                    android:id="@+id/idText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="280dp"
+                    android:drawableStart="@drawable/ic_mail_outline_black_24dp"
+                    android:hint="@string/login_id_hint"
+                    android:padding="10dp"
+                    android:inputType="text"
+                    android:privateImeOptions="defaultInputmode=english"/>
+
+            <EditText
+                    android:id="@+id/passwordText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:width="280dp"
+                    android:drawableStart="@drawable/ic_lock_black_24dp"
+                    android:hint="@string/login_password_hint"
+                    android:inputType="textPassword"
+                    android:padding="10dp"/>
 
             <Button
-                android:id="@+id/loginButton"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/rounded_button"
-                android:text="로그인"
-                android:textColor="#ffffff"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                    android:id="@+id/loginButton"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_button"
+                    android:text="로그인"
+                    android:textColor="#ffffff"
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="@string/ask_no_id_string"
-                android:textSize="18dp" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/ask_no_id_string"
+                    android:textSize="18dp"/>
 
             <TextView
-                android:id="@+id/registerNormalText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/register_normal_text_string"
-                android:textColor="@color/blue"
-                android:textSize="18dp" />
+                    android:id="@+id/registerNormalText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/register_normal_text_string"
+                    android:textColor="@color/blue"
+                    android:textSize="18dp"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="@string/if_lawmaker_string"
-                android:textSize="18dp" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/if_lawmaker_string"
+                    android:textSize="18dp"/>
 
             <TextView
-                android:id="@+id/registerLawMakerText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/register_lawmaker_text_string"
-                android:textColor="@color/blue"
-                android:textSize="18dp" />
+                    android:id="@+id/registerLawMakerText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/register_lawmaker_text_string"
+                    android:textColor="@color/blue"
+                    android:textSize="18dp"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

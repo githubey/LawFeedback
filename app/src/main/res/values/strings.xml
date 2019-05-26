@@ -1,12 +1,16 @@
 <resources>
-    <string name="app_name">My Right</string>
+    <string name="app_name">My Justice</string>
     <string name="login_id_hint">Email</string>
     <string name="login_password_hint">Password</string>
     <string name="register_nickname_hint">닉네임</string>
     <string name="register_name_hint">이름</string>
     <string name="ask_no_id_string">아직 아이디가 없으신가요?</string>
-    <string name="register_normal_text_string"><u>계정 만들기</u></string>
-    <string name="register_lawmaker_text_string"><u>국회의원 계정 만들기</u></string>
+    <string name="register_normal_text_string">
+        <u>계정 만들기</u>
+    </string>
+    <string name="register_lawmaker_text_string">
+        <u>국회의원 계정 만들기</u>
+    </string>
     <string name="if_lawmaker_string">국회의원이시라면</string>
     <string name="error_message_for_network_unavailable">네트워크 연결이 불안정 합니다. \n나중에 다시 시도해주세요.</string>
     <string name="register_success_message1">가입에 성공하셨습니다!</string>
